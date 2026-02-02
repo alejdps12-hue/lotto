@@ -544,7 +544,17 @@ h1 {
     padding: 22px;
   }
 
+  .comment-header {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
   .comment-name {
-    max-width: 55vw;
+    max-width: 100%;
+  }
+
+  .comment-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 }
