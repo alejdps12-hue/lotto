@@ -37,9 +37,9 @@ let firestoreFns = null;
 const loadFirebase = async () => {
   if (!isFirebaseConfigured) return false;
   try {
-    const appMod = await import("https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js");
+    const appMod = await import("https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js");
     const fsMod = await import(
-      "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js"
+      "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js"
     );
     const app = appMod.initializeApp(firebaseConfig);
     firestoreDb = fsMod.getFirestore(app);
