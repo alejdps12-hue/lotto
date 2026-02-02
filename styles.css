@@ -121,6 +121,37 @@ h1 {
   flex-wrap: wrap;
 }
 
+.lookup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.input-group input {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--ink);
+  width: 150px;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 2px rgba(142, 246, 228, 0.2);
+}
+
 .btn {
   border: none;
   padding: 12px 20px;
@@ -254,6 +285,91 @@ h1 {
   box-shadow: none;
 }
 
+.history-balls .ball.match {
+  border-color: #f6d365;
+  background: radial-gradient(circle at 30% 30%, #fff4b0, #f6d365 70%);
+  color: #4a2c00;
+  box-shadow: 0 0 12px rgba(246, 211, 101, 0.6);
+  animation: glowPulse 1.6s ease-in-out infinite;
+}
+
+.rank-pill {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(246, 211, 101, 0.2);
+  color: #f6d365;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.winning {
+  margin: 22px 0 8px;
+  display: grid;
+  gap: 14px;
+}
+
+.winning-empty {
+  margin: 0;
+  color: var(--muted);
+}
+
+.winning-card {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  gap: 12px;
+}
+
+.winning-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.winning-header h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.winning-meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.winning-balls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.winning-balls .ball {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+  box-shadow: none;
+}
+
+.bonus-plus {
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 4px;
+}
+
+.link {
+  color: var(--accent-2);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
 .tips-grid {
   display: grid;
   gap: 18px;
@@ -290,6 +406,18 @@ h1 {
   }
 }
 
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(246, 211, 101, 0.5);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(246, 211, 101, 0.9);
+    transform: translateY(-1px);
+  }
+}
+
 @media (max-width: 720px) {
   .draw-row {
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -301,6 +429,16 @@ h1 {
     width: 44px;
     height: 44px;
     font-size: 16px;
+  }
+
+  .input-group input {
+    width: 120px;
+  }
+
+  .winning-balls .ball {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
   }
 
   .panel {

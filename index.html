@@ -79,6 +79,37 @@
       </div>
     </section>
 
+    <section class="panel weekly">
+      <div class="panel-top">
+        <h2>주간 당첨번호</h2>
+        <div class="lookup-actions">
+          <label class="input-group" for="drawNoInput">
+            <span>회차</span>
+            <input id="drawNoInput" type="number" min="1" placeholder="예: 1157" />
+          </label>
+          <button class="btn primary" id="lookupBtn">조회</button>
+          <button class="btn ghost" id="latestBtn">최신 회차</button>
+        </div>
+      </div>
+
+      <div class="winning" id="winning">
+        <p class="winning-empty">회차를 입력하고 조회를 눌러주세요.</p>
+      </div>
+
+      <div class="meta">
+        <div class="pill" id="winningMeta">로또6/45 추첨결과 연동</div>
+        <a
+          class="link"
+          id="officialLink"
+          href="https://www.dhlottery.co.kr/lt645/result"
+          target="_blank"
+          rel="noreferrer"
+        >
+          공식 페이지
+        </a>
+      </div>
+    </section>
+
     <section class="panel history">
       <div class="panel-top">
         <h2>추첨 기록</h2>
