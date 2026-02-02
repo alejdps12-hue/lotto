@@ -176,6 +176,7 @@ const renderHistory = (history) => {
     });
 
     const time = document.createElement("span");
+    time.className = "comment-time";
     time.textContent = item.time;
 
     li.appendChild(numbersWrap);
