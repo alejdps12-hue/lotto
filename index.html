@@ -135,8 +135,31 @@
         </div>
       </div>
     </section>
+
+    <section class="panel comments">
+      <div class="panel-top">
+        <h2>댓글</h2>
+        <p class="hint">브라우저에만 저장됩니다.</p>
+      </div>
+      <form class="comment-form" id="commentForm">
+        <label class="input-group" for="commentName">
+          <span>닉네임</span>
+          <input id="commentName" type="text" maxlength="12" placeholder="익명" />
+        </label>
+        <label class="input-group" for="commentPin">
+          <span>삭제 PIN (4자리)</span>
+          <input id="commentPin" type="password" inputmode="numeric" maxlength="4" placeholder="선택" />
+        </label>
+        <label class="input-group comment-field" for="commentText">
+          <span>내용</span>
+          <textarea id="commentText" rows="3" maxlength="200" placeholder="응원 한 마디 남겨주세요"></textarea>
+        </label>
+        <button class="btn primary" type="submit">등록</button>
+      </form>
+      <ul class="comment-list" id="commentList"></ul>
+    </section>
   </main>
 
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

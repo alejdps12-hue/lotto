@@ -385,6 +385,101 @@ h1 {
   color: var(--muted);
 }
 
+.comment-form {
+  margin-top: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.comment-field textarea {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--ink);
+  resize: vertical;
+  min-height: 88px;
+}
+
+.comment-field textarea:focus {
+  outline: none;
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 2px rgba(142, 246, 228, 0.2);
+}
+
+.comment-list {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.comment-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-delete {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.comment-delete:hover {
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.comment-like {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-2);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.comment-like:hover {
+  border-color: rgba(142, 246, 228, 0.6);
+}
+
+.comment-name {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.comment-text {
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--ink);
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;

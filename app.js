@@ -1,20 +1,56 @@
-﻿const drawBtn = document.querySelector("#drawBtn");
-const clearBtn = document.querySelector("#clearBtn");
-const drawsWrap = document.querySelector("#draws");
-const historyList = document.querySelector("#history");
-const timestampEl = document.querySelector("#timestamp");
-const sortedToggle = document.querySelector("#sortedToggle");
-const lookupBtn = document.querySelector("#lookupBtn");
-const latestBtn = document.querySelector("#latestBtn");
-const drawNoInput = document.querySelector("#drawNoInput");
-const winningWrap = document.querySelector("#winning");
-const winningMeta = document.querySelector("#winningMeta");
-
+﻿let drawBtn;
+let clearBtn;
+let drawsWrap;
+let historyList;
+let timestampEl;
+let sortedToggle;
+let lookupBtn;
+let latestBtn;
+let drawNoInput;
+let winningWrap;
+let winningMeta;
+let commentForm;
+let commentName;
+let commentPin;
+let commentText;
+let commentList;
 const STORAGE_KEY = "lotto-history-v1";
 const LOTTO_RESULT_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do";
 const CORS_PROXY = "https://api.allorigins.win/raw?url=";
 
 let lastWinning = null;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDOOOKKXI4M4rwEve2vmPn-EPCHJGgpS4c",
+  authDomain: "lotto-93562.firebaseapp.com",
+  projectId: "lotto-93562",
+  storageBucket: "lotto-93562.firebasestorage.app",
+  messagingSenderId: "672101992701",
+  appId: "1:672101992701:web:578269c30d6690ddbcd694",
+};
+const isFirebaseConfigured = Object.values(firebaseConfig).every(
+  (value) => value && !String(value).includes("YOUR_")
+);
+let firestoreDb = null;
+let firestoreFns = null;
+
+const loadFirebase = async () => {
+  if (!isFirebaseConfigured) return false;
+  try {
+    const appMod = await import("https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js");
+    const fsMod = await import(
+      "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js"
+    );
+    const app = appMod.initializeApp(firebaseConfig);
+    firestoreDb = fsMod.getFirestore(app);
+    firestoreFns = fsMod;
+    return true;
+  } catch (err) {
+    firestoreDb = null;
+    firestoreFns = null;
+    return false;
+  }
+};
 
 const colorBands = [
   { max: 10, color: "#ffd166" },
@@ -167,6 +203,130 @@ const loadHistory = () => {
 
 const saveHistory = (history) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+};
+
+const formatCommentTime = (date) =>
+  new Intl.DateTimeFormat("ko-KR", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+
+const hashPin = async (pin) => {
+  const data = new TextEncoder().encode(pin);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+};
+
+const renderComments = (comments = []) => {
+  commentList.innerHTML = "";
+  if (comments.length === 0) {
+    const empty = document.createElement("li");
+    empty.className = "comment-item";
+    empty.textContent = "아직 댓글이 없습니다.";
+    commentList.appendChild(empty);
+    return;
+  }
+
+  comments.forEach((item) => {
+    const li = document.createElement("li");
+    li.className = "comment-item";
+
+    const header = document.createElement("div");
+    header.className = "comment-header";
+
+    const actions = document.createElement("div");
+    actions.className = "comment-actions";
+
+    const name = document.createElement("span");
+    name.className = "comment-name";
+    name.textContent = item.name || "익명";
+
+    const time = document.createElement("span");
+    if (item.createdAt?.toDate) {
+      time.textContent = formatCommentTime(item.createdAt.toDate());
+    } else {
+      time.textContent = item.time || "방금 전";
+    }
+
+    const like = document.createElement("button");
+    like.type = "button";
+    like.className = "comment-like";
+    like.textContent = `공감 ${item.likes || 0}`;
+    like.addEventListener("click", () => {
+      if (!firestoreDb || !firestoreFns) return;
+      const target = firestoreFns.doc(firestoreDb, "comments", item.id);
+      firestoreFns.updateDoc(target, { likes: firestoreFns.increment(1) });
+    });
+
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "comment-delete";
+    del.textContent = "삭제";
+    del.addEventListener("click", () => {
+      if (!firestoreDb || !firestoreFns) return;
+      const target = firestoreFns.doc(firestoreDb, "comments", item.id);
+      if (!item.pinHash) {
+        firestoreFns.deleteDoc(target);
+        return;
+      }
+      const inputPin = window.prompt("삭제 PIN 4자리를 입력하세요.");
+      if (!inputPin) return;
+      hashPin(inputPin.trim()).then((hashed) => {
+        if (hashed !== item.pinHash) {
+          window.alert("PIN이 올바르지 않습니다.");
+          return;
+        }
+        firestoreFns.deleteDoc(target);
+      });
+    });
+
+    const text = document.createElement("p");
+    text.className = "comment-text";
+    text.textContent = item.text;
+
+    actions.appendChild(time);
+    actions.appendChild(like);
+    actions.appendChild(del);
+    header.appendChild(name);
+    header.appendChild(actions);
+    li.appendChild(header);
+    li.appendChild(text);
+    commentList.appendChild(li);
+  });
+};
+
+const startCommentsListener = () => {
+  if (!firestoreDb || !firestoreFns) {
+    renderComments([]);
+    const empty = document.createElement("li");
+    empty.className = "comment-item";
+    empty.textContent = "Firebase 설정이 필요합니다.";
+    commentList.appendChild(empty);
+    return;
+  }
+  const commentsQuery = firestoreFns.query(
+    firestoreFns.collection(firestoreDb, "comments"),
+    firestoreFns.orderBy("createdAt", "desc")
+  );
+  firestoreFns.onSnapshot(
+    commentsQuery,
+    (snapshot) => {
+      const comments = snapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      }));
+      renderComments(comments);
+    },
+    () => {
+      renderComments([]);
+      const empty = document.createElement("li");
+      empty.className = "comment-item";
+      empty.textContent = "댓글을 불러오지 못했습니다.";
+      commentList.appendChild(empty);
+    }
+  );
 };
 
 const setWinningMessage = (message, tone = "idle") => {
@@ -400,28 +560,118 @@ const handleClear = () => {
   renderHistory([]);
 };
 
-const init = () => {
-  renderHistory(loadHistory());
+const cacheElements = () => {
+  drawBtn = document.querySelector("#drawBtn");
+  clearBtn = document.querySelector("#clearBtn");
+  drawsWrap = document.querySelector("#draws");
+  historyList = document.querySelector("#history");
+  timestampEl = document.querySelector("#timestamp");
+  sortedToggle = document.querySelector("#sortedToggle");
+  lookupBtn = document.querySelector("#lookupBtn");
+  latestBtn = document.querySelector("#latestBtn");
+  drawNoInput = document.querySelector("#drawNoInput");
+  winningWrap = document.querySelector("#winning");
+  winningMeta = document.querySelector("#winningMeta");
+  commentForm = document.querySelector("#commentForm");
+  commentName = document.querySelector("#commentName");
+  commentPin = document.querySelector("#commentPin");
+  commentText = document.querySelector("#commentText");
+  commentList = document.querySelector("#commentList");
+
+  const required = [
+    drawBtn,
+    clearBtn,
+    drawsWrap,
+    historyList,
+    timestampEl,
+    sortedToggle,
+    lookupBtn,
+    latestBtn,
+    drawNoInput,
+    winningWrap,
+    winningMeta,
+    commentForm,
+    commentName,
+    commentPin,
+    commentText,
+    commentList,
+  ];
+  return required.every(Boolean);
 };
 
-sortedToggle.addEventListener("change", () => {
-  if (lastBatch.length > 0) {
-    const batch = sortedToggle.checked
-      ? lastBatch.map((nums) => [...nums].sort((a, b) => a - b))
-      : lastBatch.map((nums) => [...nums]);
-    lastBatch = batch;
-    renderDraws(batch);
-  }
-});
+const bindEvents = () => {
+  sortedToggle.addEventListener("change", () => {
+    if (lastBatch.length > 0) {
+      const batch = sortedToggle.checked
+        ? lastBatch.map((nums) => [...nums].sort((a, b) => a - b))
+        : lastBatch.map((nums) => [...nums]);
+      lastBatch = batch;
+      renderDraws(batch);
+    }
+  });
 
-drawBtn.addEventListener("click", handleDraw);
-clearBtn.addEventListener("click", handleClear);
-lookupBtn.addEventListener("click", () => lookupDraw(drawNoInput.value));
-latestBtn.addEventListener("click", fetchLatestDraw);
-drawNoInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    lookupDraw(drawNoInput.value);
+  drawBtn.addEventListener("click", handleDraw);
+  clearBtn.addEventListener("click", handleClear);
+  lookupBtn.addEventListener("click", () => lookupDraw(drawNoInput.value));
+  latestBtn.addEventListener("click", fetchLatestDraw);
+  drawNoInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      lookupDraw(drawNoInput.value);
+    }
+  });
+  commentForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const name = commentName.value.trim();
+  const pin = commentPin.value.trim();
+  const text = commentText.value.trim();
+  if (!text) {
+    commentText.focus();
+    return;
   }
-});
+  if (pin && !/^\d{4}$/.test(pin)) {
+    window.alert("PIN은 4자리 숫자만 입력해 주세요.");
+    commentPin.focus();
+    return;
+  }
+  if (!firestoreDb || !firestoreFns) {
+    window.alert("Firebase 설정이 필요합니다.");
+    return;
+  }
+  const submit = async () => {
+    const payload = {
+      name,
+      text,
+      likes: 0,
+      createdAt: firestoreFns.serverTimestamp(),
+    };
+    if (pin) {
+      payload.pinHash = await hashPin(pin);
+    }
+    await firestoreFns.addDoc(firestoreFns.collection(firestoreDb, "comments"), payload);
+    commentText.value = "";
+    commentPin.value = "";
+  };
+  submit();
+  });
+};
 
-init();
+const init = async () => {
+  if (!cacheElements()) {
+    console.error("필수 요소를 찾지 못했습니다.");
+    return;
+  }
+  renderHistory(loadHistory());
+  bindEvents();
+  await loadFirebase();
+  startCommentsListener();
+};
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
+
+
+
