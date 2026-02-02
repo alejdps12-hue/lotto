@@ -472,6 +472,10 @@ h1 {
 .comment-name {
   font-weight: 600;
   color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40vw;
 }
 
 .comment-text {
@@ -538,5 +542,9 @@ h1 {
 
   .panel {
     padding: 22px;
+  }
+
+  .comment-name {
+    max-width: 55vw;
   }
 }
