@@ -92,6 +92,28 @@ h1 {
   font-size: 18px;
 }
 
+.hero-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav-link {
+  font-size: 12px;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
 .panel {
   background: var(--panel);
   border-radius: 24px;
@@ -113,6 +135,39 @@ h1 {
 .panel-top h2 {
   margin: 0;
   font-size: 24px;
+}
+
+.section-intro {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.about-grid,
+.policy-grid {
+  margin-top: 18px;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.about-card,
+.policy-card {
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about-card h3,
+.policy-card h3 {
+  margin: 0 0 8px;
+}
+
+.about-card p,
+.policy-card p {
+  margin: 0;
+  color: var(--muted);
 }
 
 .actions {
@@ -385,6 +440,68 @@ h1 {
   color: var(--muted);
 }
 
+.faq-list {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.faq-item {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faq-item h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.faq-item p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.policy-list {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.comment-guidelines {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.comment-guidelines h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 8px 4px 0;
+}
+
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .comment-form {
   margin-top: 18px;
   display: grid;
@@ -566,5 +683,10 @@ h1 {
   .comment-actions {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

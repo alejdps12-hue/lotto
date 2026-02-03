@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-adsense-account" content="ca-pub-8165197041036892" />
+  <meta
+    name="description"
+    content="로또6/45 번호를 공정한 랜덤 알고리즘으로 생성하고, 최근 추첨 기록과 공식 당첨번호를 확인할 수 있는 로또추첨기입니다."
+  />
   <title>로또추첨기</title>
   <script
     async
@@ -22,9 +26,44 @@
       <p class="eyebrow">Lucky Lab</p>
       <h1>로또추첨기</h1>
       <p class="subtitle">버튼 한 번으로 1~45 사이 6개의 행운 번호를 뽑아보세요.</p>
+      <nav class="hero-nav" aria-label="빠른 이동">
+        <a class="nav-link" href="#about">소개</a>
+        <a class="nav-link" href="#draw">이번 추첨</a>
+        <a class="nav-link" href="#weekly">주간 당첨번호</a>
+        <a class="nav-link" href="#history-section">추첨 기록</a>
+        <a class="nav-link" href="#guide">미니 가이드</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+        <a class="nav-link" href="#policy">개인정보</a>
+        <a class="nav-link" href="#contact">문의</a>
+      </nav>
     </header>
 
-    <section class="panel">
+    <section class="panel about" id="about">
+      <div class="panel-top">
+        <h2>사이트 소개</h2>
+      </div>
+      <p class="section-intro">
+        로또추첨기는 로또6/45 번호를 공정한 난수 기반으로 생성하고, 회차별 공식 당첨번호를
+        빠르게 확인할 수 있도록 돕는 도구입니다. 공식 기관과 무관한 개인 서비스이며, 당첨을
+        보장하거나 예측하지 않습니다.
+      </p>
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>공정한 랜덤</h3>
+          <p>암호학적으로 안전한 난수로 번호를 섞어 예측 가능성을 줄였습니다.</p>
+        </div>
+        <div class="about-card">
+          <h3>공식 데이터 연동</h3>
+          <p>동행복권 공식 결과를 기반으로 최신 회차 당첨번호를 보여줍니다.</p>
+        </div>
+        <div class="about-card">
+          <h3>책임 있는 이용</h3>
+          <p>번호 추천은 확률을 높이지 않습니다. 재미와 참고용으로만 이용해 주세요.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="draw">
       <div class="panel-top">
         <h2>이번 추첨</h2>
         <div class="actions">
@@ -85,7 +124,7 @@
       </div>
     </section>
 
-    <section class="panel weekly">
+    <section class="panel weekly" id="weekly">
       <div class="panel-top">
         <h2>주간 당첨번호</h2>
         <div class="lookup-actions">
@@ -116,7 +155,7 @@
       </div>
     </section>
 
-    <section class="panel history">
+    <section class="panel history" id="history-section">
       <div class="panel-top">
         <h2>추첨 기록</h2>
         <p class="hint">최근 10회까지 저장됩니다.</p>
@@ -124,7 +163,7 @@
       <ul class="history-list" id="history"></ul>
     </section>
 
-    <section class="panel tips">
+    <section class="panel tips" id="guide">
       <h2>미니 가이드</h2>
       <div class="tips-grid">
         <div>
@@ -139,13 +178,69 @@
           <h3>기록 유지</h3>
           <p>브라우저에 최근 10회 기록을 저장합니다. 탭을 닫아도 유지됩니다.</p>
         </div>
+        <div>
+          <h3>확률 이해</h3>
+          <p>로또는 확률 게임입니다. 번호 조합이 당첨 확률을 높이지는 않습니다.</p>
+        </div>
       </div>
     </section>
 
-    <section class="panel comments">
+    <section class="panel faq" id="faq">
+      <div class="panel-top">
+        <h2>FAQ</h2>
+        <p class="hint">자주 묻는 질문을 정리했습니다.</p>
+      </div>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <h3>이 사이트는 공식 로또 서비스인가요?</h3>
+          <p>아니요. 개인이 만든 서비스이며 동행복권과 제휴되어 있지 않습니다.</p>
+        </li>
+        <li class="faq-item">
+          <h3>번호 추천이 당첨 확률을 높여주나요?</h3>
+          <p>아니요. 어떤 조합도 당첨 확률을 높이지 않습니다. 재미와 참고용으로만 사용하세요.</p>
+        </li>
+        <li class="faq-item">
+          <h3>당첨번호는 어디서 가져오나요?</h3>
+          <p>동행복권 공식 결과 데이터를 조회합니다. 공식 페이지에서도 확인할 수 있습니다.</p>
+        </li>
+        <li class="faq-item">
+          <h3>추첨 기록은 어디에 저장되나요?</h3>
+          <p>최근 10회 기록은 사용 중인 브라우저의 로컬 저장소에만 보관됩니다.</p>
+        </li>
+        <li class="faq-item">
+          <h3>댓글은 공개되나요?</h3>
+          <p>댓글 기능이 활성화된 경우, 작성한 내용은 다른 방문자에게 공개됩니다.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel policy" id="policy">
+      <div class="panel-top">
+        <h2>개인정보 및 쿠키 안내</h2>
+        <p class="hint">광고 및 서비스 운영을 위한 기본 안내입니다.</p>
+      </div>
+      <div class="policy-grid">
+        <div class="policy-card">
+          <h3>로컬 저장</h3>
+          <p>추첨 기록은 브라우저 로컬 저장소에 저장되며 서버로 전송되지 않습니다.</p>
+        </div>
+        <div class="policy-card">
+          <h3>댓글 데이터</h3>
+          <p>댓글 기능이 활성화되면 Firebase에 닉네임, 내용, 작성 시각이 저장됩니다.</p>
+        </div>
+        <div class="policy-card">
+          <h3>광고 쿠키</h3>
+          <p>Google 및 제3자 광고 파트너는 맞춤형 광고 제공을 위해 쿠키를 사용할 수 있습니다.</p>
+        </div>
+      </div>
+      <p class="section-intro">
+        자세한 내용은 <a class="link" href="privacy.html">개인정보 처리방침</a>에서 확인해 주세요.
+      </p>
+    </section>
+
+    <section class="panel comments" id="comments">
       <div class="panel-top">
         <h2>댓글</h2>
-        <p class="hint">브라우저에만 저장됩니다.</p>
       </div>
       <form class="comment-form" id="commentForm">
         <label class="input-group" for="commentName">
@@ -163,7 +258,36 @@
         <button class="btn primary" type="submit">등록</button>
       </form>
       <ul class="comment-list" id="commentList"></ul>
+      <div class="comment-guidelines">
+        <h3>댓글 가이드</h3>
+        <ul class="policy-list">
+          <li>욕설, 혐오, 불법 콘텐츠, 개인정보 노출은 삭제될 수 있습니다.</li>
+          <li>광고성 홍보 및 스팸 게시물은 삭제될 수 있습니다.</li>
+          <li>문의 및 신고는 아래 연락처로 보내주세요.</li>
+        </ul>
+      </div>
     </section>
+
+    <section class="panel contact" id="contact">
+      <div class="panel-top">
+        <h2>문의</h2>
+        <p class="hint">서비스 개선 제안과 오류 신고를 환영합니다.</p>
+      </div>
+      <p class="section-intro">
+        이메일: <a class="link" href="mailto:contact@yourdomain.com">contact@yourdomain.com</a>
+      </p>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 Lucky Lab. All rights reserved.</span>
+      <div class="legal-links">
+        <a class="link" href="privacy.html">개인정보 처리방침</a>
+        <a class="link" href="terms.html">이용약관</a>
+        <a class="link" href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noreferrer">
+          Google 데이터 사용 안내
+        </a>
+      </div>
+    </footer>
   </main>
 
   <script type="module" src="app.js"></script>
